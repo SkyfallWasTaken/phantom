@@ -4,9 +4,11 @@ import echo from "./commands/echo.ts";
 import help from "./commands/help.ts";
 import cd from "./commands/cd.ts";
 import mkdir from "./commands/mkdir.ts";
+import ls from "./commands/ls.ts";
+
 import { type Terminal } from "@xterm/xterm";
 
-export const commands = [echo, help, cd, mkdir];
+export const commands = [echo, help, cd, mkdir, ls];
 
 interface CommandArgs {
   _: string[];
