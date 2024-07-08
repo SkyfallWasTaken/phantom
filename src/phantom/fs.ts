@@ -1,11 +1,11 @@
 let rootPath = "/";
 let currentPath = rootPath;
 
-export function getCurrentPath() {
+export function getCwd() {
   return currentPath;
 }
 
-export function setCurrentPath(path: string) {
+export function setCwd(path: string) {
   currentPath = path;
 }
 

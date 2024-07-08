@@ -1,6 +1,6 @@
-import fs from "indexeddb-fs";
+import { getCwd } from "./fs";
 
 /** Returns a prompt. */
 export default function (): string {
-  return `$ ${fs.rootDirectoryName} `;
+  return `$ ${getCwd()} `;
 }

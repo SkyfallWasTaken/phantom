@@ -2,9 +2,10 @@ import mri from "mri";
 
 import echo from "./commands/echo.ts";
 import help from "./commands/help.ts";
+import cd from "./commands/cd.ts";
 import { type Terminal } from "@xterm/xterm";
 
-export const commands = [echo, help];
+export const commands = [echo, help, cd];
 
 interface CommandArgs {
   _: string[];

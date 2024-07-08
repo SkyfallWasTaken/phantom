@@ -1,5 +1,7 @@
 import type { Command } from "../command.ts";
 import fs from "indexeddb-fs";
+import { join } from "pathe";
+import { setCwd, getCwd } from "../fs.ts";
 
 const command: Command = {
   meta: {
@@ -18,8 +20,17 @@ const command: Command = {
     term.write("\r\n");
 
     const dir = args._[0];
-    if (await fs.isDirectory(dir)) {
-        
+    const finishedPath = join(getCwd(), dir);
+    const exists = await fs.exists(finishedPath);
+
+    if (exists && (await fs.isDirectory(finishedPath))) {
+      setCwd(finishedPath);
+    } else if (exists) {
+      term.write("cd: not a directory\r\n");
+      return;
+    } else {
+      term.write("cd: path not found\r\n");
+      return;
     }
 
     term.write("\r\n");
