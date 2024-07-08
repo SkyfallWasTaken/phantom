@@ -1,7 +1,10 @@
 import mri from "mri";
 
 import echo from "./commands/echo.ts";
+import help from "./commands/help.ts";
 import { type Terminal } from "@xterm/xterm";
+
+export const commands = [echo, help];
 
 interface CommandArgs {
   _: string[];
@@ -23,8 +26,6 @@ export type Command = {
   };
   run: (terminal: Terminal, args: CommandArgs) => void;
 };
-
-export const commands = [echo];
 
 export function handleCommand(terminal: Terminal, unparsedCommand: string) {
   const parts = unparsedCommand.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
