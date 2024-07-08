@@ -6,6 +6,7 @@ import { FitAddon } from "@xterm/addon-fit";
 import * as KeyCode from "keycode-js";
 
 import getPrompt from "./prompt";
+import { handleCommand } from "./command";
 
 const fitAddon = new FitAddon();
 const addons = [fitAddon, new ClipboardAddon(), new WebLinksAddon()];
@@ -34,7 +35,7 @@ export class Phantom {
     this.terminal.onData((data) => {
       const lastKey = data.charCodeAt(data.length - 1);
       if (lastKey === KeyCode.KEY_RETURN) {
-        alert(this.command);
+        handleCommand(this.command.trim());
         this.command = "";
         this.terminal.write("\r\n" + this.prompt);
       } else if (lastKey === KeyCode.KEY_F16) {
