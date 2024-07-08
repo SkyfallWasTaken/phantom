@@ -1,21 +1,27 @@
 import type { Command } from "../command.ts";
+import fs from "indexeddb-fs";
 
 const command: Command = {
   meta: {
-    name: "echo",
-    description: "displays some text",
+    name: "cd",
+    description: "change the shell working directory",
     version: "1.0.0",
   },
   args: {
-    text: {
+    dir: {
       type: "positional",
-      description: "the text to display",
+      description: "the directory to change to",
       required: true,
     },
   },
   run: async (term, args) => {
     term.write("\r\n");
-    term.write(args._.slice(1).join(" "));
+
+    const dir = args._[0];
+    if (await fs.isDirectory(dir)) {
+        
+    }
+
     term.write("\r\n");
   },
 };

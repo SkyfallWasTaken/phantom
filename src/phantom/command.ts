@@ -24,10 +24,13 @@ export type Command = {
       required: boolean;
     };
   };
-  run: (terminal: Terminal, args: CommandArgs) => void;
+  run: (terminal: Terminal, args: CommandArgs) => Promise<void>;
 };
 
-export function handleCommand(terminal: Terminal, unparsedCommand: string) {
+export async function handleCommand(
+  terminal: Terminal,
+  unparsedCommand: string
+) {
   const parts = unparsedCommand.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
   const command = mri(parts);
 
@@ -37,5 +40,5 @@ export function handleCommand(terminal: Terminal, unparsedCommand: string) {
     console.error(`Command not found: ${command._[0]}`);
     return;
   }
-  commandToRun.run(terminal, command);
+  await commandToRun.run(terminal, command);
 }
