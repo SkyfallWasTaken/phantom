@@ -35,7 +35,7 @@ export class Phantom {
     this.terminal.onData((data) => {
       const lastKey = data.charCodeAt(data.length - 1);
       if (lastKey === KeyCode.KEY_RETURN) {
-        handleCommand(this.command.trim());
+        handleCommand(this.terminal, this.command.trim());
         this.command = "";
         this.terminal.write("\r\n" + this.prompt);
       } else if (lastKey === KeyCode.KEY_F16) {

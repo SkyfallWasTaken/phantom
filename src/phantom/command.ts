@@ -1,11 +1,13 @@
 import mri from "mri";
 
 import echo from "./commands/echo.ts";
+import { type Terminal } from "@xterm/xterm";
 
 interface CommandArgs {
   _: string[];
   [key: string]: string | boolean | string[];
 }
+
 export type Command = {
   meta: {
     name: string;
@@ -19,12 +21,12 @@ export type Command = {
       required: boolean;
     };
   };
-  run: (args: CommandArgs) => void;
+  run: (terminal: Terminal, args: CommandArgs) => void;
 };
 
-const commands = [echo];
+export const commands = [echo];
 
-export function handleCommand(unparsedCommand: string) {
+export function handleCommand(terminal: Terminal, unparsedCommand: string) {
   const parts = unparsedCommand.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
   const command = mri(parts);
 
@@ -34,5 +36,5 @@ export function handleCommand(unparsedCommand: string) {
     console.error(`Command not found: ${command._[0]}`);
     return;
   }
-  commandToRun.run(command);
+  commandToRun.run(terminal, command);
 }
