@@ -38,6 +38,7 @@ export class Phantom {
       if (lastKey === KeyCode.KEY_RETURN) {
         await handleCommand(this.terminal, this.command.trim());
         this.command = "";
+        this.prompt = getPrompt();
         this.terminal.write("\r\n" + this.prompt);
       } else if (lastKey === KeyCode.KEY_F16) {
         if (this.prompt.length + this.command.length !== this.prompt.length) {

@@ -1,34 +1,32 @@
 import type { Command } from "../command.ts";
 import fs from "indexeddb-fs";
 import { join } from "pathe";
-import { setCwd, getCwd } from "../fs.ts";
+import { getCwd } from "../fs.ts";
 
 const command: Command = {
   meta: {
-    name: "cd",
-    description: "change the shell working directory",
+    name: "mkdir",
+    description: "create a new directory",
     version: "1.0.0",
   },
   args: {
     dir: {
       type: "positional",
-      description: "the directory to change to",
+      description: "the directory to create",
       required: true,
     },
   },
   run: async (term, args) => {
     const dir = args._[1];
     const finishedPath = join(getCwd(), dir);
+    console.log(finishedPath);
     const exists = await fs.exists(finishedPath);
 
-    if (exists && (await fs.isDirectory(finishedPath))) {
-      setCwd(finishedPath);
-    } else if (exists) {
-      term.write("cd: not a directory\r\n");
+    if (exists) {
+      term.write("\r\nmkdir: directory already exists\r\n");
       return;
     } else {
-      term.write("cd: path not found\r\n");
-      return;
+      await fs.createDirectory(finishedPath);
     }
 
     term.write("\r\n");
