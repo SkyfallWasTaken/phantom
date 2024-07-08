@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import "@xterm/xterm/css/xterm.css";
 import { onMounted, ref } from "vue";
-import { runPhantom } from "./main";
+import { Phantom } from "./main";
 
 const terminalElement = ref<HTMLElement>();
 
 onMounted(() => {
-  runPhantom(terminalElement.value!);
+  new Phantom(terminalElement.value!);
 });
 </script>
 

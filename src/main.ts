@@ -9,27 +9,42 @@ import { FitAddon } from "@xterm/addon-fit";
 
 import * as KeyCode from "keycode-js";
 
-export function runPhantom(element: HTMLElement) {
-  const term = new Terminal();
-  const fitAddon = new FitAddon();
-  const addons = [fitAddon, new ClipboardAddon(), new WebLinksAddon()];
-  addons.forEach((addon) => {
-    term.loadAddon(addon);
-  });
-  console.debug(`Loaded ${addons.length} addons`);
+const fitAddon = new FitAddon();
+const addons = [fitAddon, new ClipboardAddon(), new WebLinksAddon()];
 
-  term.open(element);
+export class Phantom {
+  element: HTMLElement;
+  terminal: Terminal;
+  command: string;
 
-  fitAddon.fit();
-  term.write("Hello from Phantom! $ ");
+  constructor(element: HTMLElement) {
+    this.element = element;
+    this.terminal = new Terminal();
+    this.command = "";
 
-  term.onData((data) => {
-    if (data.charCodeAt(data.length - 1) === KeyCode.KEY_RETURN) {
-      alert("Enter");
-    } else {
-      term.write(data);
-    }
-  });
+    addons.forEach((addon) => {
+      this.terminal.loadAddon(addon);
+    });
+    console.debug(`Loaded ${addons.length} addons`);
+
+    this.terminal.open(element);
+
+    fitAddon.fit();
+    this.terminal.write("Hello from Phantom! $ ");
+
+    this.terminal.onData((data) => {
+      const lastKey = data.charCodeAt(data.length - 1);
+      if (lastKey === KeyCode.KEY_RETURN) {
+        alert(this.command);
+      } else if (lastKey === KeyCode.KEY_F16) {
+        this.command = this.command.slice(0, -1);
+        this.terminal.write("\x1b[D\x1b[P"); // Moves cursor back one space and deletes the character
+      } else {
+        this.command += data;
+        this.terminal.write(data);
+      }
+    });
+  }
 }
 
 createApp(App).mount("#app");
