@@ -1,4 +1,5 @@
 import { type Command, commands } from "../command.ts";
+import chalk from "chalk";
 
 const command: Command = {
   meta: {
@@ -15,10 +16,32 @@ const command: Command = {
   },
   run: (term, args) => {
     term.write("\r\n");
+    const longestCommandLength = findLongestStringLength(
+      commands.map((c) => c.meta.name)
+    );
     commands.forEach((command) => {
-      term.write(`${command.meta.name} - ${command.meta.description}\r\n`);
+      const paddingLength = longestCommandLength - command.meta.name.length;
+      const padding = paddingLength > 0 ? " ".repeat(paddingLength) : "";
+
+      term.write(
+        `${paddingLength > 0 ? padding : ""}${chalk.bold(
+          command.meta.name
+        )} - ${command.meta.description}\r\n`
+      );
     });
   },
 };
+
+function findLongestStringLength(arr: string[]): number {
+  let maxLength = 0;
+
+  for (let str of arr) {
+    if (str.length > maxLength) {
+      maxLength = str.length;
+    }
+  }
+
+  return maxLength;
+}
 
 export default command;
