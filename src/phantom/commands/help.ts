@@ -24,7 +24,7 @@ const command: Command = {
       const padding = paddingLength > 0 ? " ".repeat(paddingLength) : "  ";
 
       term.write(
-        `${paddingLength > 0 ? padding : ""}${chalk.bold(
+        `${paddingLength > 0 ? padding : ""}  ${chalk.bold(
           command.meta.name
         )} - ${command.meta.description}\r\n`
       );
