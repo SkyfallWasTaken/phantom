@@ -29,7 +29,7 @@ const command: Command = {
       try {
         await fs.createDirectory(finishedPath);
       } catch (e) {
-        term.write(`\r\nmkdir: failed to create directory: ${e}`)
+        term.write(`\r\nmkdir: failed to create directory: ${e}`);
         return 1;
       }
     }

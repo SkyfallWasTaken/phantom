@@ -17,7 +17,9 @@ const command: Command = {
     },
   },
   run: async (term, args) => {
-    let details = await fs.readDirectory(getCwd() === "/root" ? "root" : getCwd());
+    let details = await fs.readDirectory(
+      getCwd() === "/root" ? "root" : getCwd(),
+    );
     try {
       [...details.files, ...details.directories].forEach((file) => {
         term.write(`\r\n${file.name}`);

@@ -6,10 +6,11 @@ import cd from "./commands/cd.ts";
 import mkdir from "./commands/mkdir.ts";
 import ls from "./commands/ls.ts";
 import clear from "./commands/clear.ts";
+import ghostfetch from "./commands/ghostfetch/main.ts";
 
 import { type Terminal } from "@xterm/xterm";
 
-export const commands = [echo, help, cd, mkdir, ls, clear];
+export const commands = [echo, help, cd, mkdir, ls, clear, ghostfetch];
 
 interface CommandArgs {
   _: string[];

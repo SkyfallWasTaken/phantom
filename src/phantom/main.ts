@@ -47,7 +47,9 @@ export class Phantom {
         this.prompt = getPrompt(this.exitCode);
 
         if (this.exitCode !== 0) {
-          this.terminal.write(chalk.bold(`process exited with exit code ${this.exitCode}\r\n`))
+          this.terminal.write(
+            chalk.bold(`process exited with exit code ${this.exitCode}\r\n`),
+          );
         }
 
         this.terminal.write("\r\n" + this.prompt);
