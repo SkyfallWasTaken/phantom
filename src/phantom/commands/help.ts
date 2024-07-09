@@ -1,4 +1,5 @@
 import { type Command, commands } from "../command.ts";
+import { findLongestStringLength } from "../utils.ts";
 import chalk from "chalk";
 
 const command: Command = {
@@ -16,7 +17,7 @@ const command: Command = {
   },
   run: async (term, args) => {
     const longestCommandLength = findLongestStringLength(
-      commands.map((c) => c.meta.name),
+      commands.map((c) => c.meta.name)
     );
     commands.forEach((command) => {
       const paddingLength = longestCommandLength - command.meta.name.length;
@@ -24,25 +25,13 @@ const command: Command = {
 
       term.write(
         `${paddingLength > 0 ? padding : ""}${chalk.bold(
-          command.meta.name,
-        )} - ${command.meta.description}\r\n`,
+          command.meta.name
+        )} - ${command.meta.description}\r\n`
       );
     });
 
     return 0;
   },
 };
-
-function findLongestStringLength(arr: string[]): number {
-  let maxLength = 0;
-
-  for (let str of arr) {
-    if (str.length > maxLength) {
-      maxLength = str.length;
-    }
-  }
-
-  return maxLength;
-}
 
 export default command;
