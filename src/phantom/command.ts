@@ -5,10 +5,11 @@ import help from "./commands/help.ts";
 import cd from "./commands/cd.ts";
 import mkdir from "./commands/mkdir.ts";
 import ls from "./commands/ls.ts";
+import clear from "./commands/clear.ts";
 
 import { type Terminal } from "@xterm/xterm";
 
-export const commands = [echo, help, cd, mkdir, ls];
+export const commands = [echo, help, cd, mkdir, ls, clear];
 
 interface CommandArgs {
   _: string[];
@@ -28,13 +29,13 @@ export type Command = {
       required: boolean;
     };
   };
-  run: (terminal: Terminal, args: CommandArgs) => Promise<void>;
+  run: (terminal: Terminal, args: CommandArgs) => Promise<number>;
 };
 
 export async function handleCommand(
   terminal: Terminal,
-  unparsedCommand: string | undefined
-) {
+  unparsedCommand: string | undefined,
+): number {
   if (!unparsedCommand) {
     return terminal.write("\r\n");
   }
@@ -46,7 +47,13 @@ export async function handleCommand(
   const commandToRun = commands.find((c) => c.meta.name === command._[0]);
   if (!commandToRun) {
     terminal.write(`\r\nerror: command not found: \`${command._[0]}\`\r\n`);
-    return;
+    return 1;
   }
-  await commandToRun.run(terminal, command);
+  try {
+    return await commandToRun.run(terminal, command);
+  } catch (e) {
+    terminal.write(`\r\ncommand failed: ${e}\r\n`);
+    // FIXME: return right one
+    return 1;
+  }
 }

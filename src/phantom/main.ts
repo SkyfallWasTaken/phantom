@@ -6,8 +6,10 @@ import { FitAddon } from "@xterm/addon-fit";
 import * as KeyCode from "keycode-js";
 
 import getPrompt from "./prompt";
-import "./fs";
+import { initFs } from "./fs";
 import { handleCommand } from "./command";
+
+import chalk from "chalk";
 
 const fitAddon = new FitAddon();
 const addons = [fitAddon, new ClipboardAddon(), new WebLinksAddon()];
@@ -17,12 +19,16 @@ export class Phantom {
   terminal: Terminal;
   command: string;
   prompt: string;
+  exitCode: number;
 
   constructor(element: HTMLElement) {
     this.element = element;
     this.terminal = new Terminal();
     this.command = "";
-    this.prompt = getPrompt();
+    this.exitCode = 0;
+    this.prompt = getPrompt(this.exitCode);
+
+    initFs();
 
     addons.forEach((addon) => {
       this.terminal.loadAddon(addon);
@@ -36,9 +42,14 @@ export class Phantom {
     this.terminal.onData(async (data) => {
       const lastKey = data.charCodeAt(data.length - 1);
       if (lastKey === KeyCode.KEY_RETURN) {
-        await handleCommand(this.terminal, this.command.trim());
+        this.exitCode = await handleCommand(this.terminal, this.command.trim());
         this.command = "";
-        this.prompt = getPrompt();
+        this.prompt = getPrompt(this.exitCode);
+
+        if (this.exitCode !== 0) {
+          this.terminal.write(chalk.bold(`process exited with exit code ${this.exitCode}\r\n`))
+        }
+
         this.terminal.write("\r\n" + this.prompt);
       } else if (lastKey === KeyCode.KEY_F16) {
         if (this.prompt.length + this.command.length !== this.prompt.length) {

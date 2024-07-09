@@ -17,7 +17,7 @@ const command: Command = {
   run: async (term, args) => {
     term.write("\r\n");
     const longestCommandLength = findLongestStringLength(
-      commands.map((c) => c.meta.name)
+      commands.map((c) => c.meta.name),
     );
     commands.forEach((command) => {
       const paddingLength = longestCommandLength - command.meta.name.length;
@@ -25,10 +25,12 @@ const command: Command = {
 
       term.write(
         `${paddingLength > 0 ? padding : ""}${chalk.bold(
-          command.meta.name
-        )} - ${command.meta.description}\r\n`
+          command.meta.name,
+        )} - ${command.meta.description}\r\n`,
       );
     });
+
+    return 0;
   },
 };
 

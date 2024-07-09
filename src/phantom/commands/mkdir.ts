@@ -24,12 +24,18 @@ const command: Command = {
 
     if (exists) {
       term.write("\r\nmkdir: directory already exists\r\n");
-      return;
+      return 1;
     } else {
-      await fs.createDirectory(finishedPath);
+      try {
+        await fs.createDirectory(finishedPath);
+      } catch (e) {
+        term.write(`\r\nmkdir: failed to create directory: ${e}`)
+        return 1;
+      }
     }
 
     term.write("\r\n");
+    return 0;
   },
 };
 

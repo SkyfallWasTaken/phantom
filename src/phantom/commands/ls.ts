@@ -17,12 +17,18 @@ const command: Command = {
     },
   },
   run: async (term, args) => {
-    fs.readDirectory(join(getCwd(), args._[1] ?? "")).then((files) => {
-      [...files.files, ...files.directories].forEach((file) => {
-        term.write(`${file.name}`);
+    let details = await fs.readDirectory(getCwd() === "/root" ? "root" : getCwd());
+    try {
+      [...details.files, ...details.directories].forEach((file) => {
+        term.write(`\r\n${file.name}`);
       });
-    });
+    } catch (e) {
+      term.write(`\r\nls: failed to get files: ${e}\r\n`);
+      return 1;
+    }
     term.write("\r\n");
+
+    return 0;
   },
 };
 
