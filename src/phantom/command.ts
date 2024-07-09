@@ -9,6 +9,7 @@ import clear from "./commands/clear.ts";
 import touch from "./commands/touch.ts";
 import cowsay from "./commands/cowsay.ts";
 import ghostfetch from "./commands/ghostfetch/main.ts";
+import about from "./commands/about";
 
 import { type Terminal } from "@xterm/xterm";
 
@@ -22,6 +23,7 @@ export const commands = [
   ghostfetch,
   touch,
   cowsay,
+  about,
 ];
 
 interface CommandArgs {
