@@ -31,7 +31,6 @@ const command: Command = {
       return 1;
     }
 
-    term.write("\r\n");
     return 0;
   },
 };

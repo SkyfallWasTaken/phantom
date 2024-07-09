@@ -6,11 +6,12 @@ import cd from "./commands/cd.ts";
 import mkdir from "./commands/mkdir.ts";
 import ls from "./commands/ls.ts";
 import clear from "./commands/clear.ts";
+import touch from "./commands/touch.ts";
 import ghostfetch from "./commands/ghostfetch/main.ts";
 
 import { type Terminal } from "@xterm/xterm";
 
-export const commands = [echo, help, cd, mkdir, ls, clear, ghostfetch];
+export const commands = [echo, help, cd, mkdir, ls, clear, ghostfetch, touch];
 
 interface CommandArgs {
   _: string[];
@@ -35,7 +36,7 @@ export type Command = {
 
 export async function handleCommand(
   terminal: Terminal,
-  unparsedCommand: string | undefined,
+  unparsedCommand: string | undefined
 ): Promise<number> {
   if (!unparsedCommand) {
     terminal.write("\r\n");
