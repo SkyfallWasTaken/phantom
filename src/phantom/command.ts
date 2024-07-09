@@ -1,4 +1,6 @@
 import mri from "mri";
+import { type Terminal } from "@xterm/xterm";
+import { closest } from "./utils.ts";
 
 import echo from "./commands/echo.ts";
 import help from "./commands/help.ts";
@@ -11,8 +13,6 @@ import cowsay from "./commands/cowsay.ts";
 import cat from "./commands/cat.ts";
 import ghostfetch from "./commands/ghostfetch/main.ts";
 import about from "./commands/about";
-
-import { type Terminal } from "@xterm/xterm";
 
 export const commands = [
   echo,
@@ -64,7 +64,15 @@ export async function handleCommand(
   // Find command to run
   const commandToRun = commands.find((c) => c.meta.name === command._[0]);
   if (!commandToRun) {
+    let closestCommand = closest(
+      command._[0],
+      commands.map((c) => c.meta.name),
+      3
+    );
     terminal.write(`\r\nerror: command not found: \`${command._[0]}\`\r\n`);
+    if (closestCommand) {
+      terminal.write(`did you mean \`${closestCommand}\`?\r\n`);
+    }
     return 1;
   }
   try {
