@@ -36,9 +36,10 @@ export type Command = {
 export async function handleCommand(
   terminal: Terminal,
   unparsedCommand: string | undefined,
-): number {
+): Promise<number> {
   if (!unparsedCommand) {
-    return terminal.write("\r\n");
+    terminal.write("\r\n");
+    return 0;
   }
 
   const parts = unparsedCommand.match(/(?:[^\s"]+|"[^"]*")+/g) || [];

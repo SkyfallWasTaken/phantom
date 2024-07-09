@@ -1,4 +1,4 @@
-import type { Command } from "../command.ts";
+import type { Command } from "../../command.ts";
 import { vendor, renderer } from "./gpu.ts";
 import chalk from "chalk";
 

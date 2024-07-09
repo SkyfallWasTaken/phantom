@@ -25,10 +25,10 @@ const command: Command = {
       setCwd(finishedPath);
     } else if (exists) {
       term.write("cd: not a directory\r\n");
-      return;
+      return 1;
     } else {
       term.write("cd: path not found\r\n");
-      return;
+      return 1;
     }
 
     term.write("\r\n");
