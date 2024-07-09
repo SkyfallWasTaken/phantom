@@ -7,11 +7,22 @@ import mkdir from "./commands/mkdir.ts";
 import ls from "./commands/ls.ts";
 import clear from "./commands/clear.ts";
 import touch from "./commands/touch.ts";
+import cowsay from "./commands/cowsay.ts";
 import ghostfetch from "./commands/ghostfetch/main.ts";
 
 import { type Terminal } from "@xterm/xterm";
 
-export const commands = [echo, help, cd, mkdir, ls, clear, ghostfetch, touch];
+export const commands = [
+  echo,
+  help,
+  cd,
+  mkdir,
+  ls,
+  clear,
+  ghostfetch,
+  touch,
+  cowsay,
+];
 
 interface CommandArgs {
   _: string[];
