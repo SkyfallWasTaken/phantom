@@ -14,7 +14,6 @@ const command: Command = {
     },
   },
   run: async (term, args) => {
-    term.write("\r\n");
     term.write(args._.slice(1).join(" "));
     term.write("\r\n");
     return 0;

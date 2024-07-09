@@ -51,6 +51,7 @@ export async function handleCommand(
     return 1;
   }
   try {
+    terminal.write("\r\n");
     return await commandToRun.run(terminal, command);
   } catch (e) {
     terminal.write(`\r\ncommand failed: ${e}\r\n`);

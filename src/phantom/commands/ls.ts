@@ -22,13 +22,12 @@ const command: Command = {
     );
     try {
       [...details.files, ...details.directories].forEach((file) => {
-        term.write(`\r\n${file.name}`);
+        term.write(`${file.name}\r\n`);
       });
     } catch (e) {
-      term.write(`\r\nls: failed to get files: ${e}\r\n`);
+      term.write(`ls: failed to get files: ${e}\r\n`);
       return 1;
     }
-    term.write("\r\n");
 
     return 0;
   },

@@ -23,13 +23,13 @@ const command: Command = {
     const exists = await fs.exists(finishedPath);
 
     if (exists) {
-      term.write("\r\nmkdir: directory already exists\r\n");
+      term.write("mkdir: directory already exists\r\n");
       return 1;
     } else {
       try {
         await fs.createDirectory(finishedPath);
       } catch (e) {
-        term.write(`\r\nmkdir: failed to create directory: ${e}`);
+        term.write(`mkdir: failed to create directory: ${e}`);
         return 1;
       }
     }

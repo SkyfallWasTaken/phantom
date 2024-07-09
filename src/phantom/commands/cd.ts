@@ -24,10 +24,10 @@ const command: Command = {
     if (exists && (await fs.isDirectory(finishedPath))) {
       setCwd(finishedPath);
     } else if (exists) {
-      term.write("\r\ncd: not a directory\r\n");
+      term.write("cd: not a directory\r\n");
       return;
     } else {
-      term.write("\r\ncd: path not found\r\n");
+      term.write("cd: path not found\r\n");
       return;
     }
 

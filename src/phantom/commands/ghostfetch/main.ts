@@ -9,12 +9,10 @@ const command: Command = {
     version: "1.0.0",
   },
   run: async (term, args) => {
-    term.write("\r\n");
-
     term.write(
-      `\r\n${chalk.bold("Concurrency:")} ${navigator.hardwareConcurrency}`,
+      `${chalk.bold("Concurrency:")} ${navigator.hardwareConcurrency}\r\n`,
     );
-    term.write(`\r\n${chalk.bold("GPU:")} ${renderer}`);
+    term.write(`${chalk.bold("GPU:")} ${renderer}`);
 
     term.write("\r\n");
     return 0;
