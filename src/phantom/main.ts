@@ -35,6 +35,9 @@ export class Phantom {
     });
     console.debug(`Loaded ${addons.length} addons`);
 
+    this.terminal.options = {
+      fontFamily: "JetBrains Mono",
+    };
     this.terminal.open(element);
     this.terminal.write(this.prompt);
 
@@ -48,7 +51,7 @@ export class Phantom {
 
         if (this.exitCode !== 0) {
           this.terminal.write(
-            chalk.bold(`process exited with exit code ${this.exitCode}\r\n`),
+            chalk.bold(`process exited with exit code ${this.exitCode}\r\n`)
           );
         }
 
