@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "cb:build": "vite build",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "format": "prettier --write ."
