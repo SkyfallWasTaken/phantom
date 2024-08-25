@@ -5,7 +5,7 @@ import { FitAddon } from "@xterm/addon-fit";
 
 import * as KeyCode from "keycode-js";
 
-import getPrompt from "./prompt";
+import getPrompt, { welcomePrompt } from "./prompt";
 import { initFs } from "./fs";
 import { handleCommand } from "./command";
 
@@ -39,6 +39,7 @@ export class Phantom {
       fontFamily: "JetBrains Mono",
     };
     this.terminal.open(element);
+    this.terminal.write(welcomePrompt);
     this.terminal.write(this.prompt);
 
     fitAddon.fit();
