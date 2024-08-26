@@ -28,7 +28,11 @@ export class Phantom {
     this.exitCode = 0;
     this.prompt = getPrompt(this.exitCode);
 
-    initFs();
+    this.initialize();
+  }
+
+  private async initialize() {
+    await initFs();
 
     addons.forEach((addon) => {
       this.terminal.loadAddon(addon);
@@ -38,7 +42,7 @@ export class Phantom {
     this.terminal.options = {
       fontFamily: "JetBrains Mono",
     };
-    this.terminal.open(element);
+    this.terminal.open(this.element);
     this.terminal.write(welcomePrompt);
     this.terminal.write(this.prompt);
 
