@@ -9,7 +9,7 @@ const command: Command = {
   },
   args: {},
   run: async (term, args) => {
-    const text = args._.slice(1).join(" ");
+    const text = args._.slice(1).join(" ") || "moo!";
     term.write(cowsay({ text }).replace(/\n/g, "\r\n"));
     term.write("\r\n");
     return 0;
