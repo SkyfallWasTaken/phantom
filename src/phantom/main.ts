@@ -100,7 +100,6 @@ export class Phantom {
           this.terminal.write(this.prompt + this.command);
         }
       } else {
-        console.log(lastKey);
         this.command += data;
         this.terminal.write(data);
       }
