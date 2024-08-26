@@ -6,7 +6,7 @@ let defaultFiles = [
   {
     name: "README.md",
     content:
-      "welcome to phantom! it seems you found the `cat` command already :)\rwhy not try `cowsay`?",
+      "welcome to phantom! it seems you found the `cat` command already :)\r\nwhy not try `cowsay`?",
   },
 ];
 
