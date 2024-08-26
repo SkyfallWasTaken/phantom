@@ -19,7 +19,6 @@ const command: Command = {
   run: async (term, args) => {
     const dir = args._[1];
     const finishedPath = join(getCwd(), dir);
-    console.log(finishedPath);
     const exists = await fs.exists(finishedPath);
 
     if (exists) {

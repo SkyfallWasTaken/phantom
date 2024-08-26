@@ -79,7 +79,7 @@ const command: Command = {
       await window.pyodide.runPythonAsync(pre);
       await window.pyodide.runPythonAsync(await fs.readFile(path));
       const res = await window.pyodide.runPythonAsync(post);
-      term.write(res);
+      term.write(res.replace(/\n/g, "\r\n"));
     } catch (e) {
       term.write(`${e}`);
       return 1;

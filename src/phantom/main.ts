@@ -74,7 +74,6 @@ export class Phantom {
         }
       } else if (lastKey === 65) {
         // Up arrow
-        console.log(this.historyCursor, this.history);
         if (this.historyCursor > 0) {
           this.historyCursor--;
           this.command = this.history[this.historyCursor];
@@ -83,7 +82,6 @@ export class Phantom {
         }
       } else if (lastKey === 66) {
         // Down arrow
-        console.log(this.historyCursor, this.history);
         if (this.historyCursor < this.history.length - 1) {
           this.historyCursor++;
           this.command = this.history[this.historyCursor];

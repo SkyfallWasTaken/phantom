@@ -12,6 +12,20 @@ let defaultFiles = [
     name: "hello_world.py",
     content: "print('hello world!')",
   },
+  {
+    name: "fizzbuzz.py",
+    content: `
+for num in range(1,101):
+  string = ""
+  if num % 3 == 0:
+    string = string + "Fizz"
+  if num % 4 == 0:
+    string = string + "Buzz"
+  if num % 4 != 0 and num % 3 != 0:
+    string = string + str(num)
+  print(string)
+`,
+  },
 ];
 
 export async function initFs() {
