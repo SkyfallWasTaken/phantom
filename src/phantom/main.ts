@@ -78,7 +78,9 @@ export class Phantom {
         if (this.historyCursor > 0) {
           this.historyCursor--;
           this.command = this.history[this.historyCursor];
-          this.terminal.write("\r" + this.prompt + this.command);
+
+          this.terminal.write("\r\x1b[K");
+          this.terminal.write(this.prompt + this.command);
         }
       } else if (lastKey === 66) {
         // Down arrow
@@ -86,12 +88,16 @@ export class Phantom {
         if (this.historyCursor < this.history.length - 1) {
           this.historyCursor++;
           this.command = this.history[this.historyCursor];
-          this.terminal.write("\r" + this.prompt + this.command);
+
+          this.terminal.write("\r\x1b[K");
+          this.terminal.write(this.prompt + this.command);
         } else {
           // Reset to an empty command if cursor is at the end
           this.historyCursor = this.history.length;
           this.command = "";
-          this.terminal.write("\r" + this.prompt);
+
+          this.terminal.write("\r\x1b[K");
+          this.terminal.write(this.prompt + this.command);
         }
       } else {
         console.log(lastKey);
