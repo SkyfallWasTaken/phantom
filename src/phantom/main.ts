@@ -40,7 +40,7 @@ export class Phantom {
     console.debug(`Loaded ${addons.length} addons`);
 
     this.terminal.options = {
-      fontFamily: "JetBrains Mono",
+      fontFamily: "JetBrains Mono, monospace",
     };
     this.terminal.open(this.element);
     this.terminal.write(welcomePrompt);
