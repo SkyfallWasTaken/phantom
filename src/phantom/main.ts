@@ -20,6 +20,8 @@ export class Phantom {
   command: string;
   prompt: string;
   exitCode: number;
+  history: string[];
+  historyCursor: number;
 
   constructor(element: HTMLElement) {
     this.element = element;
@@ -27,6 +29,8 @@ export class Phantom {
     this.command = "";
     this.exitCode = 0;
     this.prompt = getPrompt(this.exitCode);
+    this.history = [];
+    this.historyCursor = 0;
 
     this.initialize();
   }
@@ -51,6 +55,8 @@ export class Phantom {
       const lastKey = data.charCodeAt(data.length - 1);
       if (lastKey === KeyCode.KEY_RETURN) {
         this.exitCode = await handleCommand(this.terminal, this.command.trim());
+        this.history.push(this.command.trim());
+        this.historyCursor = this.history.length;
         this.command = "";
         this.prompt = getPrompt(this.exitCode);
 
@@ -66,7 +72,29 @@ export class Phantom {
           this.command = this.command.slice(0, -1);
           this.terminal.write("\x1b[D\x1b[P"); // Moves cursor back one space and deletes the character
         }
+      } else if (lastKey === 65) {
+        // Up arrow
+        console.log(this.historyCursor, this.history);
+        if (this.historyCursor > 0) {
+          this.historyCursor--;
+          this.command = this.history[this.historyCursor];
+          this.terminal.write("\r" + this.prompt + this.command);
+        }
+      } else if (lastKey === 66) {
+        // Down arrow
+        console.log(this.historyCursor, this.history);
+        if (this.historyCursor < this.history.length - 1) {
+          this.historyCursor++;
+          this.command = this.history[this.historyCursor];
+          this.terminal.write("\r" + this.prompt + this.command);
+        } else {
+          // Reset to an empty command if cursor is at the end
+          this.historyCursor = this.history.length;
+          this.command = "";
+          this.terminal.write("\r" + this.prompt);
+        }
       } else {
+        console.log(lastKey);
         this.command += data;
         this.terminal.write(data);
       }
