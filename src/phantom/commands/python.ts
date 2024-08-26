@@ -67,18 +67,23 @@ const command: Command = {
 
     const path = join(getCwd(), newFileName);
     if (!(await fs.exists(path))) {
-      term.write("cat: file does not exist\r\n");
+      term.write("python: file does not exist\r\n");
       return 1;
     } else if (await fs.isDirectory(path)) {
-      term.write("cat: not a file\r\n");
+      term.write("python: not a file\r\n");
       return 1;
     }
 
     // Capture the Python output using a redirected output mechanism
-    await window.pyodide.runPythonAsync(pre);
-    await window.pyodide.runPythonAsync(await fs.readFile(path));
-    const res = await window.pyodide.runPythonAsync(post);
-    term.write(res);
+    try {
+      await window.pyodide.runPythonAsync(pre);
+      await window.pyodide.runPythonAsync(await fs.readFile(path));
+      const res = await window.pyodide.runPythonAsync(post);
+      term.write(res);
+    } catch (e) {
+      term.write(`${e}`);
+      return 1;
+    }
 
     return 0;
   },
