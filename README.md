@@ -27,6 +27,8 @@ Phantom supports Python scripts - and they run in the browser!
 
 ![output of `python fizzbuzz.png`](readme-images/fizzbuzz.png)
 
+This uses Pyodide under the hood. Pyodide is only loaded if you use the `python` command.
+
 ### Persistent filesystem
 
 Phantom has a persistent filesystem (powered by IndexedDB), as well as commands to help you use it, such as `cd`, `cat`, `mkdir`, and `touch`.
