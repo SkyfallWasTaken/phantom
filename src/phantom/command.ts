@@ -13,6 +13,7 @@ import cowsay from "./commands/cowsay.ts";
 import cat from "./commands/cat.ts";
 import ghostfetch from "./commands/ghostfetch/main.ts";
 import about from "./commands/about";
+import python from "./commands/python";
 
 export const commands = [
   echo,
@@ -26,6 +27,7 @@ export const commands = [
   cowsay,
   about,
   cat,
+  python,
 ];
 
 interface CommandArgs {

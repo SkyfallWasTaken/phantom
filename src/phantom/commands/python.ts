@@ -1,0 +1,68 @@
+import type { Command } from "../command.ts";
+
+const pyodideUrl = "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js";
+
+const loadPyodideScript = () => {
+  return new Promise<void>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = pyodideUrl;
+    script.onload = () => {
+      window
+        .loadPyodide()
+        .then((pyodide) => {
+          window.pyodide = pyodide;
+          window.__pyodideLoaded = true;
+          resolve();
+        })
+        .catch((e) => reject(e));
+    };
+    script.onerror = () => {
+      reject(new Error("Failed to load Pyodide script"));
+    };
+    document.head.appendChild(script);
+  });
+};
+
+const command: Command = {
+  meta: {
+    name: "python",
+    description: "run a python script",
+    version: "1.0.0",
+  },
+  args: {},
+  run: async (term) => {
+    if (!window.__pyodideLoaded) {
+      term.write("downloading pyodide, this may take a while...\r\n");
+      await loadPyodideScript();
+      term.write("pyodide loaded!\r\n\r\n");
+    }
+
+    // Capture the Python output using a redirected output mechanism
+    const pre = `
+import sys
+from io import StringIO
+
+# Redirect standard output
+old_stdout = sys.stdout
+sys.stdout = buffer = StringIO()
+`;
+    const post = `
+# Reset stdout
+sys.stdout = old_stdout
+
+# Get the output
+output = buffer.getvalue()
+output
+`;
+
+    await window.pyodide.runPythonAsync(pre);
+    await window.pyodide.runPythonAsync("print('hello world')");
+    const res = await window.pyodide.runPythonAsync(post);
+    console.log("res", res);
+    term.write(res);
+
+    return 0;
+  },
+};
+
+export default command;
