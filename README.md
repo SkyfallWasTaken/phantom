@@ -16,9 +16,16 @@
       cowsay - cow says moo!
        about - info about phantom
          cat - print file to standard output
+      python - run a python script
 ```
 
 ## Features
+
+### In-browser Python support
+
+Phantom supports Python scripts - and they run in the browser!
+
+![output of `python fizzbuzz.png`](readme-images/fizzbuzz.png)
 
 ### Persistent filesystem
 
