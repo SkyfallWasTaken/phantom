@@ -8,6 +8,10 @@ let defaultFiles = [
     content:
       "welcome to phantom! it seems you found the `cat` command already :)\r\nwhy not try `cowsay`?",
   },
+  {
+    name: "hello_world.py",
+    content: "print('hello world!')",
+  },
 ];
 
 export async function initFs() {

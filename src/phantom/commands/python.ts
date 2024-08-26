@@ -1,4 +1,7 @@
 import type { Command } from "../command.ts";
+import fs from "indexeddb-fs";
+import { join } from "pathe";
+import { getCwd } from "../fs.ts";
 
 const pyodideUrl = "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js";
 
@@ -23,22 +26,7 @@ const loadPyodideScript = () => {
   });
 };
 
-const command: Command = {
-  meta: {
-    name: "python",
-    description: "run a python script",
-    version: "1.0.0",
-  },
-  args: {},
-  run: async (term) => {
-    if (!window.__pyodideLoaded) {
-      term.write("downloading pyodide, this may take a while...\r\n");
-      await loadPyodideScript();
-      term.write("pyodide loaded!\r\n\r\n");
-    }
-
-    // Capture the Python output using a redirected output mechanism
-    const pre = `
+const pre = `
 import sys
 from io import StringIO
 
@@ -46,7 +34,7 @@ from io import StringIO
 old_stdout = sys.stdout
 sys.stdout = buffer = StringIO()
 `;
-    const post = `
+const post = `
 # Reset stdout
 sys.stdout = old_stdout
 
@@ -55,10 +43,41 @@ output = buffer.getvalue()
 output
 `;
 
+const command: Command = {
+  meta: {
+    name: "python",
+    description: "run a python script",
+    version: "1.0.0",
+  },
+  args: {},
+  run: async (term, args) => {
+    const newFileName = args._[1];
+    if (!newFileName) {
+      term.write(
+        "python: missing file operand\r\nexample: python hello_world.py"
+      );
+      return 1;
+    }
+
+    if (!window.__pyodideLoaded) {
+      term.write("downloading pyodide, this may take a while...\r\n");
+      await loadPyodideScript();
+      term.write("pyodide loaded!\r\n\r\n");
+    }
+
+    const path = join(getCwd(), newFileName);
+    if (!(await fs.exists(path))) {
+      term.write("cat: file does not exist\r\n");
+      return 1;
+    } else if (await fs.isDirectory(path)) {
+      term.write("cat: not a file\r\n");
+      return 1;
+    }
+
+    // Capture the Python output using a redirected output mechanism
     await window.pyodide.runPythonAsync(pre);
-    await window.pyodide.runPythonAsync("print('hello world')");
+    await window.pyodide.runPythonAsync(await fs.readFile(path));
     const res = await window.pyodide.runPythonAsync(post);
-    console.log("res", res);
     term.write(res);
 
     return 0;
