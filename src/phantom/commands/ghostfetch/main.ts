@@ -3,6 +3,10 @@ import { vendor, renderer } from "./gpu.ts";
 import { findLongestStringLength } from "../../utils.ts";
 import chalk from "chalk";
 
+interface Info {
+  [key: string]: string[];
+}
+
 const command: Command = {
   meta: {
     name: "ghostfetch",
@@ -10,8 +14,8 @@ const command: Command = {
     version: "1.0.0",
   },
   args: {},
-  run: async (term, args) => {
-    const info = {
+  run: async (term) => {
+    const info: Info = {
       GPU: [
         `${chalk.cyan.bold("Vendor:")} ${vendor}`,
         `${chalk.cyan.bold("Renderer:")} ${renderer}`,

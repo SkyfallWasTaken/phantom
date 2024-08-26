@@ -15,7 +15,7 @@ const command: Command = {
       required: true,
     },
   },
-  run: async (term, args) => {
+  run: async (term) => {
     const longestCommandLength = findLongestStringLength(
       commands.map((c) => c.meta.name)
     );

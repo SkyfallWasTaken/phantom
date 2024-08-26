@@ -7,7 +7,7 @@ const command: Command = {
     version: "1.0.0",
   },
   args: {},
-  run: async (term, args) => {
+  run: async (term) => {
     term.clear();
     return 0;
   },

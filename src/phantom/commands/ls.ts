@@ -1,7 +1,6 @@
 import type { Command } from "../command.ts";
 import fs from "indexeddb-fs";
-import { join } from "pathe";
-import { setCwd, getCwd } from "../fs.ts";
+import { getCwd } from "../fs.ts";
 
 const command: Command = {
   meta: {
