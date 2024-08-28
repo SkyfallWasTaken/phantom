@@ -67,12 +67,7 @@ export class Phantom {
         }
 
         this.terminal.write("\r\n" + this.prompt);
-      } else if (lastKey === KeyCode.KEY_F16) {
-        if (this.prompt.length + this.command.length !== this.prompt.length) {
-          this.command = this.command.slice(0, -1);
-          this.terminal.write("\x1b[D\x1b[P"); // Moves cursor back one space and deletes the character
-        }
-      } else if (lastKey === 65) {
+      } else if (lastKey === 65 && data === "\x1b[A") {
         // Up arrow
         if (this.historyCursor > 0) {
           this.historyCursor--;
@@ -80,7 +75,7 @@ export class Phantom {
 
           this.writeHistoryUpdate();
         }
-      } else if (lastKey === 66) {
+      } else if (lastKey === 66 && data === "\x1b[B") {
         // Down arrow
         if (this.historyCursor < this.history.length - 1) {
           this.historyCursor++;
