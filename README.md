@@ -25,7 +25,7 @@
 
 Phantom supports Python scripts - and they run in the browser!
 
-![output of `python fizzbuzz.png`](readme-images/fizzbuzz.png)
+![output of `python fizzbuzz.png`](https://github.com/SkyfallWasTaken/phantom/blob/main/readme-images/fizzbuzz.png?raw=true)
 
 This uses Pyodide under the hood. Pyodide is only loaded if you use the `python` command.
 
@@ -33,13 +33,13 @@ This uses Pyodide under the hood. Pyodide is only loaded if you use the `python`
 
 Phantom has a persistent filesystem (powered by IndexedDB), as well as commands to help you use it, such as `cd`, `cat`, `mkdir`, and `touch`.
 
-![output of `cat README.md`](readme-images/cat.png)
+![output of `cat README.md`](https://github.com/SkyfallWasTaken/phantom/blob/main/readme-images/cat.png?raw=true)
 
 ### "Did You Mean?" suggestions
 
 If you make a typo in a command, Phantom's got your back - it'll automatically provide a suggestion that may be relevant.
 
-![did you mean "about"?](readme-images/dym.png)
+![did you mean "about"?](https://github.com/SkyfallWasTaken/phantom/blob/main/readme-images/dym.png?raw=true)
 
 Under the hood, Phantom uses the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) to find the closest command in its registry.
 
@@ -47,7 +47,7 @@ Under the hood, Phantom uses the [Levenshtein distance](https://en.wikipedia.org
 
 Phantom has a cool command prompt, inspired by [Starship!](https://starship.rs)
 
-![command prompt](readme-images/prompt.png)
+![command prompt](https://github.com/SkyfallWasTaken/phantom/blob/main/readme-images/prompt.png?raw=true)
 
 ---
 
